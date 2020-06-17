@@ -1,4 +1,3 @@
-import sys
 import os
 import numpy as np
 import pickle
@@ -229,18 +228,11 @@ class Jogador:
   #     Passo 1:
   #       valor(estado) = 0 + 0.2 x (0.9 x 1.0 - 0) = 0.18
   def recompensar(self, reward):
-    ganhou = reward == 1
     for st in reversed(self.states):
       if self.states_value.get(st) is None:
         self.states_value[st] = 0
       self.states_value[st] += self.lr * (self.decay_gamma * reward - self.states_value[st])
       reward = self.states_value[st]
-    if ganhou:
-      print(len(self.states))
-      for st in reversed(self.states):
-        print(f'{st} - val: {self.states_value[st]}')
-      sys.exit(0)
-
 
   def reinicia(self):
     self.states = [] # Limpa os estados, mas não o dicionário dos valores
